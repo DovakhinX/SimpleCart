@@ -7,7 +7,7 @@ import { useCartStore } from "../stores/CartStore";
 
 const CartContainer = () => {
 
-    const { cartItems, removeFromCart } = useCartStore();
+    const { cartItems } = useCartStore();
 
     const subtotal = cartItems.reduce((acc, item) => {
         const itemTotal = item.price * (item.quantity ?? 1);
@@ -42,8 +42,6 @@ const CartContainer = () => {
                                 <th>${item?.price}</th>
                                 <th><Quantity qty={item?.quantity ?? 1} productId={item?.id} /></th>
                                 <th>${(item?.price) * (item?.quantity ?? 1)}</th>
-                                <th><button onClick={() => removeFromCart(item?.id)}
-                                    className='border-2 rounded-xl border-red-400 p-1 text-red-400 w-6 '>X</button></th>
                             </tr>))) : (<p className='text-center'>Your Cart is Empty...</p>)}
                     </tbody>
                 </table>

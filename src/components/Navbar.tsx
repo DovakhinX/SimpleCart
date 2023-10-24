@@ -15,7 +15,8 @@ const Navbar = () => {
       </Link>
       <Link to={'/cart'}>{
         cartItems.length > 0 ?
-          <img src={cart} width={30} className='shaker' ></img> : <img src={cart2} width={30} ></img>
+         <div className='relative'> <img src={cart} width={30} className='shaker'></img><p className='absolute top-1 left-3 text-white text-[10px]'>{cartItems.length}</p></div>
+         : <img src={cart2} width={30} ></img>
       }
       </Link>
     </nav>

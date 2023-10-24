@@ -11,13 +11,21 @@ type ProductStore = {
 
 export const useCartStore = create<ProductStore>((set) => ({
     cartItems: [],
-    addToCart: (product: Product) => {
-        const prodWithQty = { ...product, quantity: 1 };
 
-        set((state) => ({
-            cartItems: [...state.cartItems, prodWithQty],
-        }));
+    addToCart: (product: Product) => {
+        set((state) => {
+            const itemIndex = state.cartItems.findIndex((item) => item.id === product.id)
+            if (itemIndex !== -1) {
+                state.cartItems[itemIndex].quantity++
+            } else {
+                state.cartItems.push({ ...product, quantity: 1 })
+            }
+            return {
+                cartItems: [...state.cartItems]
+            }
+        })
     },
+
     removeFromCart: (productId: number) => {
         set((state) => {
             const updatedCartItems = state.cartItems.filter((item) => item.id !== productId)
@@ -25,9 +33,8 @@ export const useCartStore = create<ProductStore>((set) => ({
                 cartItems: updatedCartItems
             }
         })
-
-
     },
+
     increaseQty: (productId: number) => {
         set((state) => {
             const updatedCartItems = state.cartItems.map((item) => {
@@ -36,12 +43,12 @@ export const useCartStore = create<ProductStore>((set) => ({
                 }
                 return item;
             });
-
             return {
                 cartItems: updatedCartItems,
             };
         });
     },
+
     decreaseQty: (productId: number) => {
         set((state) => {
             const updatedCartItems = state.cartItems.map((item) => {
@@ -50,7 +57,6 @@ export const useCartStore = create<ProductStore>((set) => ({
                 }
                 return item;
             });
-
             return {
                 cartItems: updatedCartItems,
             };
